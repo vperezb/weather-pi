@@ -55,14 +55,13 @@ def upload_to_storage():
 
     if not internet():
         sense.show_message('NO INTERNET', text_colour=(255,0,0))
-        raise Exception('NO INTERNET connection avaliable')
-        
-    for file_to_upload in files_to_upload:
-        if (file_to_upload != '{}.csv'.format(day)):
-            succeed = upload_file(join(unclouded_dir, file_to_upload))
-            if succeed:
-                rename(join(unclouded_dir, file_to_upload) , join(clouded_dir,file_to_upload))
-            else:
-                pass # TO DO log the error
-        else: pass
+    else:
+        for file_to_upload in files_to_upload:
+            if (file_to_upload != '{}.csv'.format(day)):
+                succeed = upload_file(join(unclouded_dir, file_to_upload))
+                if succeed:
+                    rename(join(unclouded_dir, file_to_upload) , join(clouded_dir,file_to_upload))
+                else:
+                    pass # TO DO log the error
+            else: pass
 
