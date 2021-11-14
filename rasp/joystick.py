@@ -1,4 +1,4 @@
-from . import registry_uploader
+from modules import registry_uploader
 
 from sense_hat import SenseHat
 import time
