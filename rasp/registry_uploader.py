@@ -1,14 +1,17 @@
 from os import listdir, rename
-from os.path import isfile, join
+from os.path import isfile, join, dirname
 import requests
 import datetime
 import socket
 import configparser
-config.read('config.cfg')
+
+
 
 from sense_hat import SenseHat
 
 config = configparser.ConfigParser()
+rasp_dir = dirname(__file__)
+config.read(rasp_dir, '..', 'config.cfg')
 
 def internet(host="8.8.8.8", port=53, timeout=3):
     """
@@ -54,7 +57,7 @@ if not internet():
 	
 for file_to_upload in files_to_upload:
     if (file_to_upload != '{}.csv'.format(day)):
-	    succeed = upload_file(unclouded_dir + '/' + file_to_upload)
+        succeed = upload_file(unclouded_dir + '/' + file_to_upload)
         if succeed:
             rename(unclouded_dir + '/' + file_to_upload, clouded_dir + '/' + file_to_upload)
         else:

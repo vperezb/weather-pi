@@ -6,11 +6,12 @@ import datetime
 
 from sense_hat import SenseHat
 
+rasp_dir = os.path.dirname(__file__)
 
 sense = SenseHat()
 sense.clear()
 
-local_directory = 'data/local-files/'
+local_directory = os.path.join(rasp_dir, 'data/local-files/')
 
 try:
 	while True:
