@@ -30,7 +30,7 @@ try:
 		with open(file_name, "a+" ) as fd:
 			fd.write(csv_row)
 
-		sense.set_pixel(0, 0, 255, 255, 255)
+		sense.set_pixel(0, 0, 0,255,0)
 		time.sleep(60*30)
 except KeyboardInterrupt:
 	pass

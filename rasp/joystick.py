@@ -4,6 +4,7 @@ from sense_hat import SenseHat
 import time
 sense = SenseHat()
 
+sense.set_pixel(0, 1, 0,255,0)
 
 while True:
     for event in sense.stick.get_events():
@@ -11,7 +12,7 @@ while True:
             sense.set_pixel(7, 7, 0, 255, 255)
             succeed = registry_uploader.upload_to_storage()
             if succeed:
-                sense.clear(124,252,0)
+                sense.clear(0,255,0)
                 time.sleep(2)
                 sense.clear()
             else:
