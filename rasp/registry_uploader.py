@@ -5,8 +5,6 @@ import datetime
 import socket
 import configparser
 
-
-
 from sense_hat import SenseHat
 
 config = configparser.ConfigParser()
