@@ -25,8 +25,8 @@ def internet(host="8.8.8.8", port=53, timeout=3):
 def upload_file(file_path):
 
     config = configparser.ConfigParser()
-    rasp_dir = dirname(__file__)
-    config.read(join(rasp_dir, '..', 'config.cfg'))
+    modules_dir = dirname(__file__)
+    config.read(join(modules_dir, '..' ,'..', 'config.cfg'))
 
     with open(file_path, "rb") as file_to_upload:
         domain = config['GoogleCloud']['APIDomain']
@@ -43,10 +43,10 @@ def upload_file(file_path):
 
 def upload_to_storage():
     sense = SenseHat()
-    rasp_dir = dirname(__file__)
+    modules_dir = dirname(__file__)
 
-    unclouded_dir = join(rasp_dir, 'data', 'local-files')
-    clouded_dir = join(rasp_dir,'data' , 'uploaded-files')
+    unclouded_dir = join(modules_dir, '..', 'data', 'local-files')
+    clouded_dir = join(modules_dir, '..', 'data' , 'uploaded-files')
 
     day = datetime.datetime.now().strftime("%Y-%m-%d")
 
