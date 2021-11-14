@@ -43,8 +43,8 @@ def upload_file(file_path):
 
 sense = SenseHat()
 
-unclouded_dir = 'data/local-files'
-clouded_dir = 'data/uploaded-files'
+unclouded_dir = join(rasp_dir, 'data', 'local-files')
+clouded_dir = join(rasp_dir,'data' , 'uploaded-files')
 
 day = datetime.datetime.now().strftime("%Y-%m-%d")
 
@@ -57,9 +57,9 @@ if not internet():
 	
 for file_to_upload in files_to_upload:
     if (file_to_upload != '{}.csv'.format(day)):
-        succeed = upload_file(unclouded_dir + '/' + file_to_upload)
+        succeed = upload_file(join(unclouded_dir, file_to_upload))
         if succeed:
-            rename(unclouded_dir + '/' + file_to_upload, clouded_dir + '/' + file_to_upload)
+            rename(join(unclouded_dir, file_to_upload) , join(clouded_dir,file_to_upload))
         else:
             pass # TO DO log the error
     else: pass
