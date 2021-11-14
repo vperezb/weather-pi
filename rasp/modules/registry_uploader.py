@@ -43,6 +43,7 @@ def upload_file(file_path):
 
 def upload_to_storage():
     sense = SenseHat()
+    rasp_dir = dirname(__file__)
 
     unclouded_dir = join(rasp_dir, 'data', 'local-files')
     clouded_dir = join(rasp_dir,'data' , 'uploaded-files')
