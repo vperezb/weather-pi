@@ -7,10 +7,6 @@ import configparser
 
 from sense_hat import SenseHat
 
-config = configparser.ConfigParser()
-rasp_dir = dirname(__file__)
-config.read(join(rasp_dir, '..', 'config.cfg'))
-
 def internet(host="8.8.8.8", port=53, timeout=3):
     """
     Host: 8.8.8.8 (google-public-dns-a.google.com)
@@ -27,6 +23,11 @@ def internet(host="8.8.8.8", port=53, timeout=3):
 	
 
 def upload_file(file_path):
+
+    config = configparser.ConfigParser()
+    rasp_dir = dirname(__file__)
+    config.read(join(rasp_dir, '..', 'config.cfg'))
+
     with open(file_path, "rb") as file_to_upload:
         domain = config['GoogleCloud']['APIDomain']
         file_day = file_path.split('/')[-1].split('.')[0]
@@ -39,26 +40,28 @@ def upload_file(file_path):
     else:
         return False
 
-sense = SenseHat()
 
-unclouded_dir = join(rasp_dir, 'data', 'local-files')
-clouded_dir = join(rasp_dir,'data' , 'uploaded-files')
+def upload_to_storage():
+    sense = SenseHat()
 
-day = datetime.datetime.now().strftime("%Y-%m-%d")
+    unclouded_dir = join(rasp_dir, 'data', 'local-files')
+    clouded_dir = join(rasp_dir,'data' , 'uploaded-files')
 
-files_to_upload = [ f for f in listdir(unclouded_dir) if isfile(join(unclouded_dir, f)) ]
+    day = datetime.datetime.now().strftime("%Y-%m-%d")
+
+    files_to_upload = [ f for f in listdir(unclouded_dir) if isfile(join(unclouded_dir, f)) ]
 
 
-if not internet():
-    sense.show_message('NO INTERNET', text_colour=(255,0,0))
-    raise Exception('NO INTERNET connection avaliable')
-	
-for file_to_upload in files_to_upload:
-    if (file_to_upload != '{}.csv'.format(day)):
-        succeed = upload_file(join(unclouded_dir, file_to_upload))
-        if succeed:
-            rename(join(unclouded_dir, file_to_upload) , join(clouded_dir,file_to_upload))
-        else:
-            pass # TO DO log the error
-    else: pass
+    if not internet():
+        sense.show_message('NO INTERNET', text_colour=(255,0,0))
+        raise Exception('NO INTERNET connection avaliable')
+        
+    for file_to_upload in files_to_upload:
+        if (file_to_upload != '{}.csv'.format(day)):
+            succeed = upload_file(join(unclouded_dir, file_to_upload))
+            if succeed:
+                rename(join(unclouded_dir, file_to_upload) , join(clouded_dir,file_to_upload))
+            else:
+                pass # TO DO log the error
+        else: pass
 
