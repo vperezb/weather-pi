@@ -10,6 +10,8 @@ from sense_hat import SenseHat
 sense = SenseHat()
 sense.clear()
 
+local_directory = 'data/local-files/'
+
 try:
 	while True:
 		datetime_now = datetime.datetime.now()
@@ -21,10 +23,9 @@ try:
 		csv_row = datetime_now.strftime("%Y/%m/%d,  %H:%M:%S") \
 		+ ", " + str(temp) + ", " + str(round(hum,1)) + '\n'
 		
-		file_name = 'data/unclouded-files/' + datetime_now.strftime("%Y-%m-%d") + '.csv'
+		file_name = local_directory + datetime_now.strftime("%Y-%m-%d") + '.csv'
 		
-		exist=os.path.exists(file_name)
-		with open(file_name, "a" if exist else "w") as fd:
+		with open(file_name, "a+" ) as fd:
 			fd.write(csv_row)
 
 		sense.set_pixel(0, 0, 255, 255, 255)

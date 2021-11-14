@@ -4,6 +4,7 @@ import requests
 import datetime
 import socket
 import configparser
+config.read('config.cfg')
 
 from sense_hat import SenseHat
 
@@ -30,10 +31,9 @@ def upload_file(file_path):
         file_day = file_path.split('/')[-1].split('.')[0]
         file_dict = {"inputfile.csv": file_to_upload}
         request_data = {'register_day': file_day}
-        response = requests.post(domain + "/upload", 
-	        files=file_dict, data = request_data)
-
-	if response.status_code == 201:
+        response = requests.post(domain + "/upload", files=file_dict, data = request_data)
+        
+    if (response.status_code == 201):
         return True
     else:
         return False

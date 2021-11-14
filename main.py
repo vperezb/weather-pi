@@ -7,6 +7,7 @@ from flask import Flask, request
 from google.cloud import storage
 
 config = configparser.ConfigParser()
+config.read('config.cfg')
 
 def _get_google_storage_client():
     return storage.Client(config['GoogleCloud']['Project'])
@@ -34,7 +35,7 @@ def list_blobs(bucket_name):
 
 def get_blob_as_string(blob_name):
     storage_client = storage.Client()
-    bucket = storage_client.get_bucket(config['GoogleCloud']['Project'])
+    bucket = storage_client.get_bucket(config['GoogleCloud']['Bucket'])
     #blob = bucket.get_blob(blob_name) Aqui ya haría el get, por lo que al hacer el as string lo peta
     blob = bucket.blob(blob_name)
     return blob.download_as_string()
@@ -45,15 +46,16 @@ app = Flask(__name__)
 
 @app.route('/', methods = ['GET'])
 def root():
-
-    print (str(list(list_blobs(config['GoogleCloud']['Project']))))
-    return '# Weather-pi \n' + str([ '<a href="/view-file?n={bn}">{bn}</a>'.format(bn=blob.name) for blob in list_blobs(config['GoogleCloud']['Project']) ] )
+    print (str(list(list_blobs(config['GoogleCloud']['Bucket']))))
+    return '<h1>weather-pi</h1>' + str([ '<a href="/view-file?n={bn}">{bn}</a>'.format(bn=blob.name) for blob in list_blobs(config['GoogleCloud']['Bucket']) ] )
+# return jsonify({'h1': 'weather-pi-home',
+#    'days-uploaded': [ '{host}view-file?n={bn}'.format(host=request.host_url, bn=blob.name) for blob in list_blobs(config['GoogleCloud']['Bucket']) ]})
 
 @app.route('/upload', methods = ['POST'])
 def upload():
     posted_file = str(request.files['inputfile.csv'].read(), 'utf-8')
     register_day = request.form['register_day']
-    _upload_string_to_google_storage(posted_file, config['GoogleCloud']['Project'], '{}.csv'.format(register_day.replace('-','/')))
+    _upload_string_to_google_storage(posted_file, config['GoogleCloud']['Bucket'], '{}.csv'.format(register_day.replace('-','/')))
     return 'created', 201
 
 
