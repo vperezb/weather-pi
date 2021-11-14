@@ -19,4 +19,5 @@ while True:
                 sense.clear(220,20,60)
                 time.sleep(2)
                 sense.clear()
-        print (event.direction, event.action)
+            sense.set_pixel(0, 1, 0,255,0)
+        #print (event.direction, event.action)
