@@ -11,7 +11,7 @@ from sense_hat import SenseHat
 
 config = configparser.ConfigParser()
 rasp_dir = dirname(__file__)
-config.read(rasp_dir, '..', 'config.cfg')
+config.read(join(rasp_dir, '..', 'config.cfg'))
 
 def internet(host="8.8.8.8", port=53, timeout=3):
     """
