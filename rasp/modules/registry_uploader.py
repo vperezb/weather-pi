@@ -55,6 +55,7 @@ def upload_to_storage():
 
     if not internet():
         sense.show_message('NO INTERNET', text_colour=(255,0,0))
+        return False
     else:
         for file_to_upload in files_to_upload:
             if (file_to_upload != '{}.csv'.format(day)):
@@ -64,4 +65,5 @@ def upload_to_storage():
                 else:
                     pass # TO DO log the error
             else: pass
+        return True
 
