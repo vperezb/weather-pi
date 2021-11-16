@@ -70,7 +70,7 @@ def view_file():
 
 @app.route('/hola', methods = ['GET'])
 def hola():
-    return ('hahahaha')
+    return ('hehehehhe')
 
     
 @app.errorhandler(500)
